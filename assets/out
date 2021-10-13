@@ -84,7 +84,6 @@ if [ -f "$version_file" ]; then
   version=$(cat $version_file)
 elif [ -f "$pom_file" ]; then
   evaluation_url=$release_url
-  [ -n "$snapshot_url" ] && echo $file | grep -q "\-SNAPSHOT." && evaluation_url=$snapshot_url
   version=$(echo -ne 'POM_VERSION=${project.version}\n0\n' | mvn help:evaluate -Drepository.url=$evaluation_url -f $pom_file | grep '^POM_VERSION' | cut -d = -f 2)
 else
   echo "[ERROR] invalid payload (must specify version file or pom file)"
